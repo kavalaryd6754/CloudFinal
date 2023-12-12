@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Data Display</title>
+</head>
 <body>
 
-<?php
-$servername = "finaldb.c7xrxh1irlzf.us-east-1.rds.amazonaws.com";
-$username = "admin";
-$password = "goldowl77";
-$dbname = "FinalDBName";
+<h1>Look at these very awesome movies :D</h1>
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+<div id="output"></div>
 
-$sql = "SELECT title, genre, director, release_year FROM movies";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "<br> title: ". $row["title"]. " - genre: ". $row["genre"]. " released: " . $row["release_year"] "directed by: " $row["director"] . "<br>";
+<script>
+// Use JavaScript to make an AJAX request to the PHP file
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        // Display the response in the 'output' div
+        document.getElementById("output").innerHTML = this.responseText;
     }
-} else {
-    echo "0 results";
-}
-
-$conn->close();
-?>
+};
+xhttp.open("GET", "request.php", true);
+xhttp.send();
+</script>
 
 </body>
 </html>
